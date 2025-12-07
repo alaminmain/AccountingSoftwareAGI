@@ -1,0 +1,12 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  AccountingSystem.Domain -> D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\bin\Debug\net9.0\AccountingSystem.Domain.dll
+  AccountingSystem.Application -> D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Application\bin\Debug\net9.0\AccountingSystem.Application.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.67
+
+Workload updates are available. Run `dotnet workload list` for more information.
