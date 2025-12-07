@@ -11,10 +11,33 @@ namespace AccountingSystem.Infrastructure.Persistence
 
         public DbSet<AccountingSystem.Domain.Entities.Tenant> Tenants { get; set; }
         public DbSet<AccountingSystem.Domain.Entities.Branch> Branches { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.ChartOfAccount> ChartOfAccounts { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.SubsidiaryType> SubsidiaryTypes { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.SubsidiaryLedger> SubsidiaryLedgers { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.Voucher> Vouchers { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.VoucherDetail> VoucherDetails { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.FiscalYear> FiscalYears { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.VoucherWorkflowLog> VoucherWorkflowLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            // COA Self-referencing relationship
+            modelBuilder.Entity<AccountingSystem.Domain.Entities.ChartOfAccount>()
+                .HasOne(c => c.Parent)
+                .WithMany(c => c.Children)
+                .HasForeignKey(c => c.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Voucher Details relationships
+            modelBuilder.Entity<AccountingSystem.Domain.Entities.VoucherDetail>()
+                 .HasOne(d => d.Voucher)
+                 .WithMany(v => v.Details)
+                 .HasForeignKey(d => d.VoucherId)
+                 .OnDelete(DeleteBehavior.Cascade);
+                 
+            // Balance check constraint or validation logic will be in Application laye
             
             // Global Filter for Multi-tenancy
             // We will implement this dynamically later or per entity configuration
