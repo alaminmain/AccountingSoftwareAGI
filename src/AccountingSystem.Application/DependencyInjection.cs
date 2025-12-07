@@ -1,3 +1,5 @@
+using AccountingSystem.Application.Interfaces.Services;
+using AccountingSystem.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AccountingSystem.Application
@@ -6,7 +8,8 @@ namespace AccountingSystem.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            // Register Application services here (Validators, MediatR, etc.)
+            // Register Application services here
+            services.AddScoped<IVoucherService, VoucherService>();
             return services;
         }
     }
