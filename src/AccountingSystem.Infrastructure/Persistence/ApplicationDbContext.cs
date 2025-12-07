@@ -18,6 +18,8 @@ namespace AccountingSystem.Infrastructure.Persistence
         public DbSet<AccountingSystem.Domain.Entities.VoucherDetail> VoucherDetails { get; set; }
         public DbSet<AccountingSystem.Domain.Entities.FiscalYear> FiscalYears { get; set; }
         public DbSet<AccountingSystem.Domain.Entities.VoucherWorkflowLog> VoucherWorkflowLogs { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.User> Users { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
