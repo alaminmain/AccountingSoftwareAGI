@@ -35,7 +35,7 @@ namespace AccountingSystem.Application.Services
 
             var voucher = new Voucher
             {
-                Date = dto.Date,
+                Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc),
                 VoucherNo = Guid.NewGuid().ToString().Substring(0, 8).ToUpper(), // Placeholder for real number generator
                 ReferenceNo = dto.ReferenceNo,
                 Narration = dto.Narration,
@@ -131,6 +131,80 @@ namespace AccountingSystem.Application.Services
             });
             
             return voucher;
+        }
+
+
+        public async Task<IEnumerable<Voucher>> GetAllVouchersAsync(int tenantId)
+        {
+            return await _voucherRepository.GetAsync(v => v.TenantId == tenantId);
+        }
+
+        public async Task<Voucher> UpdateVoucherAsync(int id, CreateVoucherDto dto, string updatedBy)
+        {
+            var voucher = await _voucherRepository.GetByIdAsync(id);
+            if (voucher == null) throw new KeyNotFoundException("Voucher not found");
+
+            if (voucher.Status != VoucherStatus.Draft)
+                throw new InvalidOperationException("Only Draft vouchers can be edited.");
+
+            if (dto.Details.Count == 0 || (dto.Details.Sum(d => d.DebitAmount) != dto.Details.Sum(d => d.CreditAmount)))
+            {
+                if (dto.Details.Sum(d => d.DebitAmount) != dto.Details.Sum(d => d.CreditAmount))
+                {
+                    throw new InvalidOperationException("Debit and Credit totals must match.");
+                }
+            }
+
+            // Update Header
+            voucher.Date = DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc);
+            voucher.ReferenceNo = dto.ReferenceNo;
+            voucher.Narration = dto.Narration;
+            voucher.VoucherType = dto.VoucherType;
+            voucher.BranchId = dto.BranchId;
+            voucher.LastModifiedBy = updatedBy;
+            voucher.LastModifiedAt = DateTime.UtcNow;
+
+            // Update Details - Basic approach: Remove all and re-add. 
+            // Better approach: track differences, but for now replace is safer for consistency.
+            // Assumption: IGenericRepository UpdateAsync might not handle child collection replacement automatically depending on EF config.
+            // Let's rely on EF Core tracking if repository attaches it. 
+            // But GenericRepository usually just does Update(entity).
+            // We need to manually handle collection.
+            
+            voucher.Details.Clear(); // This requires including Details in GetByIdAsync... which GenericRepo might not do.
+            
+            // Check GenericRepository GetByIdAsync implementation. 
+            // If it doesn't Include Details, we might get issues.
+            // For now, let's assume we can overwrite list if it's tracking.
+            // Actually, best to just update properties and let Service layer handle complex graph updates 
+            // OR use a specific repository method for Voucher update.
+            
+            // Re-mapping details
+             voucher.Details = dto.Details.Select(d => new VoucherDetail
+            {
+                AccountId = d.AccountId,
+                SubsidiaryLedgerId = d.SubsidiaryLedgerId,
+                DebitAmount = d.DebitAmount,
+                CreditAmount = d.CreditAmount,
+                LineNarration = d.LineNarration
+            }).ToList();
+
+            await _voucherRepository.UpdateAsync(voucher);
+
+             await _logRepository.AddAsync(new VoucherWorkflowLog
+            {
+                VoucherId = voucher.Id,
+                FromStatus = voucher.Status,
+                ToStatus = voucher.Status,
+                ActionBy = updatedBy,
+                Comment = "Updated"
+            });
+
+            return voucher;
+        }
+        public async Task<Voucher?> GetVoucherByIdAsync(int id)
+        {
+            return await _voucherRepository.GetByIdAsync(id);
         }
     }
 }

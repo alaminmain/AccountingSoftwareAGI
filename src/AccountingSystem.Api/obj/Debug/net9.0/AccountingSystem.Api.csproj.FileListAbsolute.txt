@@ -7,7 +7,6 @@ D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\AccountingSystem.Api.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\AccountingSystem.Api.pdb
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Humanizer.dll
-D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Microsoft.Build.Locator.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
@@ -28,6 +27,9 @@ D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Mono.TextTemplating.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Npgsql.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\System.CodeDom.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\System.Composition.AttributedModel.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\bin\Debug\net9.0\System.Composition.Convention.dll
@@ -127,3 +129,4 @@ D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\obj\Debug\net9.0\
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\obj\Debug\net9.0\AccountingSystem.Api.pdb
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\obj\Debug\net9.0\AccountingSystem.Api.genruntimeconfig.cache
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\obj\Debug\net9.0\ref\AccountingSystem.Api.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Api\obj\Debug\net9.0\AccountingSystem.Api.sourcelink.json

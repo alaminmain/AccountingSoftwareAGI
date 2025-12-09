@@ -8,5 +8,8 @@ namespace AccountingSystem.Application.Interfaces.Services
         Task<Voucher> CreateVoucherAsync(CreateVoucherDto dto, string createdBy);
         Task<Voucher> VerifyVoucherAsync(int id, string verifiedBy);
         Task<Voucher> ApproveVoucherAsync(int id, string approvedBy);
+        Task<IEnumerable<Voucher>> GetAllVouchersAsync(int tenantId);
+        Task<Voucher> UpdateVoucherAsync(int id, CreateVoucherDto dto, string updatedBy);
+        Task<Voucher?> GetVoucherByIdAsync(int id);
     }
 }

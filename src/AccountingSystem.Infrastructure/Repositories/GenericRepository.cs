@@ -17,6 +17,20 @@ namespace AccountingSystem.Infrastructure.Repositories
 
         public async Task<T?> GetByIdAsync(int id)
         {
+            // Simple approach: we need Eager Loading for Vouchers -> Details.
+            // But this is a Generic Repo.
+            // Override in specialized repo? 
+            // Or just allow lazy loading? (LazyLoadingProxies not enabled).
+            // Let's rely on manual Include if needed, OR:
+            
+            // Hack for MVP: if T is Voucher, include Details.
+            if (typeof(T) == typeof(AccountingSystem.Domain.Entities.Voucher))
+            {
+                 return await _context.Set<T>()
+                    .Include("Details")
+                    .FirstOrDefaultAsync(x => x.Id == id);
+            }
+
             return await _context.Set<T>().FindAsync(id);
         }
 

@@ -9,3 +9,4 @@ D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\obj\Debug\net9
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\obj\Debug\net9.0\refint\AccountingSystem.Domain.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\obj\Debug\net9.0\AccountingSystem.Domain.pdb
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\obj\Debug\net9.0\ref\AccountingSystem.Domain.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Domain\obj\Debug\net9.0\AccountingSystem.Domain.sourcelink.json

@@ -31,6 +31,21 @@ namespace AccountingSystem.Api.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateVoucherDto dto)
+        {
+            var updatedBy = "User"; // Should be from Claims
+            try
+            {
+                var voucher = await _voucherService.UpdateVoucherAsync(id, dto, updatedBy);
+                return Ok(voucher);
+            }
+             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut("{id}/verify")]
         public async Task<IActionResult> Verify(int id)
         {
@@ -53,6 +68,27 @@ namespace AccountingSystem.Api.Controllers
             try
             {
                 var voucher = await _voucherService.ApproveVoucherAsync(id, approvedBy);
+                return Ok(voucher);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int tenantId = 1)
+        {
+            var vouchers = await _voucherService.GetAllVouchersAsync(tenantId);
+            return Ok(vouchers);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var voucher = await _voucherService.GetVoucherByIdAsync(id);
+                if (voucher == null) return NotFound();
                 return Ok(voucher);
             }
             catch (Exception ex)

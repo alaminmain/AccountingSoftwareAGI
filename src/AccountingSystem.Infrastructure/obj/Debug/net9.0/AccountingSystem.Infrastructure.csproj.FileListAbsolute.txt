@@ -15,3 +15,4 @@ D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Infrastructure\obj\De
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Infrastructure\obj\Debug\net9.0\refint\AccountingSystem.Infrastructure.dll
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Infrastructure\obj\Debug\net9.0\AccountingSystem.Infrastructure.pdb
 D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Infrastructure\obj\Debug\net9.0\ref\AccountingSystem.Infrastructure.dll
+D:\Test Project\AccountingSoftwareAGI\src\AccountingSystem.Infrastructure\obj\Debug\net9.0\AccountingSystem.Infrastructure.sourcelink.json
