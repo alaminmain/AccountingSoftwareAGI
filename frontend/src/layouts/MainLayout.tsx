@@ -55,10 +55,14 @@ export const MainLayout = () => {
                     </div>
                     <SidebarItem to="/reports/ledger" icon={BookOpen} label="Ledger" />
                     <SidebarItem to="/reports/trial-balance" icon={Paperclip} label="Trial Balance" />
+                    <SidebarItem to="/reports/balance-sheet" icon={FileText} label="Balance Sheet" />
+                    <SidebarItem to="/reports/income-statement" icon={BookOpen} label="Income Statement" />
 
                     <div className="pt-4 pb-2">
                         <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">System</p>
                     </div>
+                    <SidebarItem to="/super-admin" icon={Settings} label="Super Admin" />
+                    <SidebarItem to="/employees" icon={Users} label="Employees" />
                     <SidebarItem to="/settings" icon={Settings} label="Settings" />
                 </nav>
 
@@ -67,10 +71,21 @@ export const MainLayout = () => {
                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
                             AD
                         </div>
-                        <div className="text-xs">
+                        <div className="text-xs flex-1">
                             <p className="font-medium">Admin User</p>
                             <p className="text-muted-foreground">Head Office</p>
                         </div>
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem('token');
+                                localStorage.removeItem('refreshToken');
+                                window.location.href = '/login';
+                            }}
+                            className="text-muted-foreground hover:text-red-500 transition-colors"
+                            title="Logout"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </button>
                     </div>
                 </div>
             </aside>

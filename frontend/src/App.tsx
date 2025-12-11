@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MainLayout } from './layouts/MainLayout';
 import { Dashboard } from './pages/Dashboard';
@@ -10,15 +9,19 @@ import { Ledger } from './pages/Ledger';
 import { TrialBalance } from './pages/TrialBalance';
 import { BalanceSheet } from './pages/BalanceSheet';
 import { IncomeStatement } from './pages/IncomeStatement';
-
-// Placeholder for Login
-const Login = () => <div className="flex h-screen items-center justify-center">Login Page</div>;
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { ForgotPassword } from './pages/ForgotPassword';
+import SuperAdminDashboard from './pages/SuperAdminDashboard';
+import EmployeeManagement from './pages/EmployeeManagement';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
@@ -33,6 +36,8 @@ function App() {
           <Route path="reports/trial-balance" element={<TrialBalance />} />
           <Route path="reports/balance-sheet" element={<BalanceSheet />} />
           <Route path="reports/income-statement" element={<IncomeStatement />} />
+          <Route path="super-admin" element={<SuperAdminDashboard />} />
+          <Route path="employees" element={<EmployeeManagement />} />
           {/* <Route path="settings" element={<Settings />} /> */}
         </Route>
       </Routes>

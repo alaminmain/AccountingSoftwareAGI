@@ -6,6 +6,8 @@ using AccountingSystem.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using AccountingSystem.Domain.Entities;
 
 namespace AccountingSystem.Infrastructure
 {
@@ -20,6 +22,12 @@ namespace AccountingSystem.Infrastructure
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IReportingService, Services.ReportingService>();
+            
+            services.AddScoped<IVoucherService, VoucherService>();
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            
+            services.AddScoped<IEmailSender<User>, EmailSender>();
 
             return services;
         }

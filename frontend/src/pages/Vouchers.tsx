@@ -30,7 +30,21 @@ export const Vouchers = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
 
     useEffect(() => {
-        api.get('/ChartOfAccounts').then(res => setAccounts(res.data));
+        api.get('/ChartOfAccounts').then(res => {
+            const allAccounts = res.data as any[];
+            // Filter only leaf nodes (those that are not parents of any other account)
+            // Or ideally use IsControlAccount flag if available. 
+            // Assuming IsControlAccount = true means it's a folder/parent.
+            // Let's check if 'children' or 'isControlAccount' is available. 
+            // If flat list, check parentId presence.
+            const leafAccounts = allAccounts.filter(acc =>
+                // Either explicit IsControlAccount flag is false (if API returns it)
+                (acc.isControlAccount === false) ||
+                // OR no other account points to this as parent
+                !allAccounts.some(child => child.parentId === acc.id)
+            );
+            setAccounts(leafAccounts);
+        });
 
         if (id) {
             api.get(`/Vouchers?tenantId=1`).then(res => { // Ideally fetch single by ID

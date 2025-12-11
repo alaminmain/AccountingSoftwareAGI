@@ -1,4 +1,5 @@
 using AccountingSystem.Application;
+using AccountingSystem.Domain.Entities;
 using AccountingSystem.Infrastructure;
 using AccountingSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<Role>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -38,8 +43,15 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<ApplicationDbContext>();
-    await SeedData.InitializeAsync(context);
+    try
+    {
+        await SeedData.InitializeAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
 }
 
 // Configure the HTTP request pipeline.
@@ -53,7 +65,11 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Map Identity API endpoints
+app.MapGroup("/api/auth").MapIdentityApi<User>();
 
 app.MapControllers();
 

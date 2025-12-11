@@ -1,9 +1,11 @@
+using AccountingSystem.Domain.Entities;
 using AccountingSystem.Domain.Entities.Common;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -18,8 +20,8 @@ namespace AccountingSystem.Infrastructure.Persistence
         public DbSet<AccountingSystem.Domain.Entities.VoucherDetail> VoucherDetails { get; set; }
         public DbSet<AccountingSystem.Domain.Entities.FiscalYear> FiscalYears { get; set; }
         public DbSet<AccountingSystem.Domain.Entities.VoucherWorkflowLog> VoucherWorkflowLogs { get; set; }
-        public DbSet<AccountingSystem.Domain.Entities.User> Users { get; set; }
-        public DbSet<AccountingSystem.Domain.Entities.UserRole> UserRoles { get; set; }
+        public DbSet<AccountingSystem.Domain.Entities.Employee> Employees { get; set; }
+        // User and Role DbSets are included in IdentityDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
