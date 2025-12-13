@@ -27,7 +27,7 @@ namespace AccountingSystem.Infrastructure
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             
-            services.AddScoped<IEmailSender<User>, EmailSender>();
+            services.AddTransient<IEmailSender<User>, EmailSender>();
 
             return services;
         }

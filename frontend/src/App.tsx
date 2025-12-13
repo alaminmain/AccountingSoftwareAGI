@@ -4,6 +4,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Subsidiaries } from './pages/Subsidiaries';
 import { ChartOfAccounts } from './pages/ChartOfAccounts';
 import { Vouchers } from './pages/Vouchers';
+import { Approvals } from './pages/Approvals';
 import { VoucherDashboard } from './pages/VoucherDashboard';
 import { Ledger } from './pages/Ledger';
 import { TrialBalance } from './pages/TrialBalance';
@@ -31,7 +32,7 @@ function App() {
 
           <Route path="vouchers" element={<Vouchers />} />
           <Route path="vouchers/:id" element={<Vouchers />} />
-          <Route path="approvals" element={<VoucherDashboard />} />
+          <Route path="approvals" element={<Approvals />} />
           <Route path="reports/ledger" element={<Ledger />} />
           <Route path="reports/trial-balance" element={<TrialBalance />} />
           <Route path="reports/balance-sheet" element={<BalanceSheet />} />

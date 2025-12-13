@@ -22,11 +22,36 @@ namespace AccountingSystem.Api.Controllers
             return Ok(accounts);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var account = await _repository.GetByIdAsync(id);
+            if (account == null) return NotFound();
+            return Ok(account);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(ChartOfAccount account)
         {
             var created = await _repository.AddAsync(account);
-            return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, ChartOfAccount account)
+        {
+            if (id != account.Id) return BadRequest();
+            await _repository.UpdateAsync(account);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var account = await _repository.GetByIdAsync(id);
+            if (account == null) return NotFound();
+            await _repository.DeleteAsync(account);
+            return NoContent();
         }
     }
 }

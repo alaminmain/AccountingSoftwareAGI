@@ -9,6 +9,7 @@ namespace AccountingSystem.Domain.Entities
         public string VoucherNo { get; set; } = string.Empty; // Auto-generated
         public string? ReferenceNo { get; set; }
         public string? Narration { get; set; }
+        public string? AttachmentPath { get; set; }
         
         public VoucherType VoucherType { get; set; }
         public VoucherStatus Status { get; set; }

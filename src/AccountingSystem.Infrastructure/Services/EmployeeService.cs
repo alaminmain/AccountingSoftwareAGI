@@ -125,5 +125,28 @@ namespace AccountingSystem.Infrastructure.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task UpdateEmployeeAsync(int id, CreateEmployeeDto dto)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee == null) throw new ArgumentException("Employee not found");
+
+            employee.FirstName = dto.FirstName;
+            employee.LastName = dto.LastName;
+            employee.Designation = dto.Designation;
+            employee.Department = dto.Department;
+            employee.BranchId = dto.BranchId;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteEmployeeAsync(int id)
+        {
+             var employee = await _context.Employees.FindAsync(id);
+             if (employee == null) throw new ArgumentException("Employee not found");
+
+             _context.Employees.Remove(employee);
+             await _context.SaveChangesAsync();
+        }
     }
 }

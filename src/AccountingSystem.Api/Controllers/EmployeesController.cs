@@ -47,5 +47,33 @@ namespace AccountingSystem.Api.Controllers
             if (result == null) return NotFound();
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateEmployeeDto dto)
+        {
+            try
+            {
+                await _employeeService.UpdateEmployeeAsync(id, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _employeeService.DeleteEmployeeAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

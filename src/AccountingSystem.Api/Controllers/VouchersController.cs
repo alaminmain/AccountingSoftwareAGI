@@ -1,5 +1,6 @@
 using AccountingSystem.Application.DTOs.Voucher;
 using AccountingSystem.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountingSystem.Api.Controllers
@@ -15,14 +16,29 @@ namespace AccountingSystem.Api.Controllers
             _voucherService = voucherService;
         }
 
+        public class CreateVoucherRequest
+        {
+            public string Dto { get; set; } = string.Empty;
+            public IFormFile? Attachment { get; set; }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Create(CreateVoucherDto dto)
+        public async Task<IActionResult> Create([FromForm] CreateVoucherRequest request)
         {
             // In real app, get user from Claims
             var createdBy = "User"; 
             try 
             {
-                var voucher = await _voucherService.CreateVoucherAsync(dto, createdBy);
+                var dto = System.Text.Json.JsonSerializer.Deserialize<CreateVoucherDto>(request.Dto, new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (dto == null) return BadRequest("Invalid Data");
+
+                Stream? stream = null;
+                if (request.Attachment != null)
+                {
+                    stream = request.Attachment.OpenReadStream();
+                }
+
+                var voucher = await _voucherService.CreateVoucherNewAsync(dto, createdBy, stream, request.Attachment?.FileName);
                 return Ok(voucher);
             }
             catch (Exception ex)
@@ -96,5 +112,6 @@ namespace AccountingSystem.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
