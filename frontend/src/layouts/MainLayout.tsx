@@ -1,6 +1,6 @@
 
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, FileText, Settings, Users, Layers, Paperclip, CheckCircle } from 'lucide-react';
+import { LayoutDashboard, BookOpen, FileText, Settings, Users, Layers, Paperclip, CheckCircle, Shield } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -62,6 +62,7 @@ export const MainLayout = () => {
                         <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">System</p>
                     </div>
                     <SidebarItem to="/super-admin" icon={Settings} label="Super Admin" />
+                    <SidebarItem to="/users" icon={Shield} label="Users" />
                     <SidebarItem to="/employees" icon={Users} label="Employees" />
                     <SidebarItem to="/settings" icon={Settings} label="Settings" />
                 </nav>

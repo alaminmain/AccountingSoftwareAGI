@@ -15,6 +15,7 @@ import { Register } from './pages/Register';
 import { ForgotPassword } from './pages/ForgotPassword';
 import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import EmployeeManagement from './pages/EmployeeManagement';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="reports/income-statement" element={<IncomeStatement />} />
           <Route path="super-admin" element={<SuperAdminDashboard />} />
           <Route path="employees" element={<EmployeeManagement />} />
+          <Route path="users" element={<UserManagement />} />
           {/* <Route path="settings" element={<Settings />} /> */}
         </Route>
       </Routes>
