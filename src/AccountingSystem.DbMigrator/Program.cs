@@ -63,6 +63,8 @@ namespace AccountingSystem.DbMigrator
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddSignInManager()
                     .AddDefaultTokenProviders();
+
+                    services.AddDataProtection();
                 });
     }
 }

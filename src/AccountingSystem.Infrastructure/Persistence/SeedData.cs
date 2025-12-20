@@ -169,10 +169,32 @@ namespace AccountingSystem.Infrastructure.Persistence
                     subTypes.Add(st);
                 }
 
-                // 4. Subsidiary Ledgers (5 Customers, 5 Suppliers)
+                // 4. Chart of Accounts (COA) - REORDERED: Must exist before Subsidiary Ledgers
+                if (!await context.ChartOfAccounts.AnyAsync(c => c.TenantId == tenantId))
+                {
+                    await SeedCOATreeAsync(context, tenantId);
+                }
+
+                // 5. Subsidiary Ledgers (5 Customers, 5 Suppliers)
                 var subsidiaries = new List<SubsidiaryLedger>();
+                
+                // Fetch valid Control Accounts
+                var assetControlAcct = await context.ChartOfAccounts
+                    .Where(c => c.TenantId == tenantId && c.Name.Contains("Assets") && !c.IsControlAccount)
+                    .FirstOrDefaultAsync();
+                    
+                var liabilityControlAcct = await context.ChartOfAccounts
+                    .Where(c => c.TenantId == tenantId && c.Name.Contains("Liabilities") && !c.IsControlAccount)
+                    .FirstOrDefaultAsync();
+
+                // Fallback if not found (should be found after seeding)
+                if (assetControlAcct == null) assetControlAcct = await context.ChartOfAccounts.FirstOrDefaultAsync(c => c.TenantId == tenantId);
+                if (liabilityControlAcct == null) liabilityControlAcct = assetControlAcct;
+
                 foreach(var st in subTypes)
                 {
+                    int controlAcctId = st.Name == "Customer" ? assetControlAcct.Id : liabilityControlAcct.Id;
+
                     for(int s=1; s<=5; s++)
                     {
                          string sName = $"{st.Name} {s} T{i}";
@@ -184,6 +206,7 @@ namespace AccountingSystem.Infrastructure.Persistence
                                  Code = $"{st.Name[0]}-{s:000}", 
                                  SubsidiaryTypeId = st.Id,
                                  TenantId = tenantId, 
+                                 ControlAccountId = controlAcctId,
                                  CreatedBy = "Seed" 
                              };
                              context.SubsidiaryLedgers.Add(sub);
@@ -191,12 +214,6 @@ namespace AccountingSystem.Infrastructure.Persistence
                          }
                          subsidiaries.Add(sub);
                     }
-                }
-
-                // 5. Chart of Accounts (COA)
-                if (!await context.ChartOfAccounts.AnyAsync(c => c.TenantId == tenantId))
-                {
-                    await SeedCOATreeAsync(context, tenantId);
                 }
 
                 // 6. Vouchers (1 Year Data)
